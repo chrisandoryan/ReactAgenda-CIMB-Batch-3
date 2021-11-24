@@ -1,13 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
+import AgendaClass from './pages/AgendaClass';
 
-function App() {
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ErrorBoundary from './components/class/ErrorBoundary';
+
+function Greeting() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Hi. Nama saya Boby. 
         </p>
         <a
           className="App-link"
@@ -18,6 +22,16 @@ function App() {
           Learn React
         </a>
       </header>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div className="App">
+      <ErrorBoundary>
+        <AgendaClass></AgendaClass>
+      </ErrorBoundary>
     </div>
   );
 }
