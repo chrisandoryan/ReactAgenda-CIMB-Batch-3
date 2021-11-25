@@ -6,6 +6,16 @@ class AgendaCardClass extends React.Component {
         super(props);
     }
 
+    handleEditClick = () => {
+        let agendaIndex = this.props.agendaId;
+        this.props.callEnableEditMode(agendaIndex);
+    }
+
+    handleDeleteClick = () => {
+        let agendaIndex = this.props.agendaId;
+        this.props.callDeleteAgenda(agendaIndex);
+    }
+
     render() {
         return (
             <Card style={{ width: '18rem' }}>
@@ -15,8 +25,8 @@ class AgendaCardClass extends React.Component {
                     <Card.Text>
                         {this.props.agendaDescription}
                     </Card.Text>
-                    <Button variant="primary">Edit</Button>
-                    <Button variant="danger">Delete</Button>
+                    <Button onClick={this.handleEditClick} variant="primary">Edit</Button>
+                    <Button onClick={this.handleDeleteClick} variant="danger">Delete</Button>
                 </Card.Body>
             </Card>
         )

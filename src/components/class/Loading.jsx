@@ -8,7 +8,7 @@ class Loading extends React.Component {
 
     componentWillUnmount() {
         // di-trigger ketika component Loading dicabut dari UI
-        alert("componentWillUnmount!")
+        // alert("componentWillUnmount!")
     }
 
     render() {

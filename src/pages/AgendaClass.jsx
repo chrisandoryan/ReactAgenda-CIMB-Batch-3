@@ -31,9 +31,9 @@ class AgendaClass extends React.Component {
 
     componentDidMount() {
         // simulate crash/error
-        throw new Error("Dhuar! Ada error gan!");
+        // throw new Error("Dhuar! Ada error gan!");
         
-        alert("componentDidMount!");
+        // alert("componentDidMount!");
         // TODO: Load API
         setTimeout(() => {
             // update data didalam state
@@ -46,11 +46,39 @@ class AgendaClass extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         console.log('PP', prevProps);
         console.log('PS', prevState);
-        alert('componentDidUpdate!')
+        // alert('componentDidUpdate!')
     }
 
     testFunction = () => {
         alert("Terpanggil!")
+    }
+
+    addAgenda = (agendaObject) => {
+        console.log("AO", agendaObject)
+        // Note: state adalah immutable => tidak bisa dirubah langsung
+        // Cara 1: simpen current state ke temp variable
+        // let agendas = this.state.agendas;
+        // agendas.push(agendaObject);
+        // this.setState({
+        //     agendas: agendas
+        // });
+
+        // Cara 2: Spread syntax/spread function (...)
+        this.setState({
+            agendas: [...this.state.agendas, agendaObject]
+        })
+    }
+
+    deleteAgenda = (agendaIndex) => {
+        if (agendaIndex <= this.state.agendas.length) {
+            let agendas = [...this.state.agendas];
+            agendas.splice(agendaIndex, 1);
+            this.setState({
+                agendas: agendas
+            })
+        } else {
+            console.log("Error while deleting agenda.");
+        }
     }
 
     // responsible to display things on the UI
@@ -64,15 +92,12 @@ class AgendaClass extends React.Component {
                         null
                     )
                 }
-                <div className="header">
-                    <AgendaNavbar />
-                </div>
                 <Container>
                     <Row>
                         {/* xs => layar hp (xtra small), md=> layar tab dsb (medium), lg => layar laptop, pc, dsb (large) */}
                         <Col xs={12} md={4} lg={4}>
                             <div className="agendaForm">
-                                <AgendaFormClass callTestFunction={this.testFunction} />
+                                <AgendaFormClass callTestFunction={this.testFunction} callAddAgenda={this.addAgenda} />
                             </div>
                         </Col>
                         <Col>
@@ -83,7 +108,7 @@ class AgendaClass extends React.Component {
                                             // Alt 1: props passing with variable
                                             // <AgendaCardClass dataAgenda={agenda} ></AgendaCardClass>
                                             // Alt 2: props passing using spread function
-                                            <AgendaCardClass {...agenda}></AgendaCardClass>
+                                            <AgendaCardClass {...agenda} callDeleteAgenda={this.deleteAgenda} agendaId={index}></AgendaCardClass>
                                         )
                                     })
                                 }

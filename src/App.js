@@ -1,9 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import AgendaClass from './pages/AgendaClass';
+import AgendaFunction from './pages/AgendaFunction';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ErrorBoundary from './components/class/ErrorBoundary';
+import AgendaNavbar from './components/class/AgendaNavbar';
+
 
 function Greeting() {
   return (
@@ -26,13 +30,31 @@ function Greeting() {
   );
 }
 
+function RouteComponent() {
+  // Routes:
+  // /home
+  // /agendaClass
+  // /agendaFunction
+  return (
+    <Router>
+      <AgendaNavbar />
+      <Routes>
+        <Route path="/"></Route>
+        <Route path="/demoReact" element={<Greeting />}></Route>
+        <Route path="/agendaClass" element={<AgendaClass />}></Route>
+        <Route path="/agendaFunction" element={<AgendaFunction editMode={false} />}></Route>
+      </Routes>
+    </Router>
+  )
+}
+
 function App() {
   return (
-    <div className="App">
-      <ErrorBoundary>
-        <AgendaClass></AgendaClass>
-      </ErrorBoundary>
-    </div>
+    <ErrorBoundary>
+      <div className="App">
+          <RouteComponent />
+      </div>
+    </ErrorBoundary>
   );
 }
 
