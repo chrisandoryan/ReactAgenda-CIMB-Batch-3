@@ -78,11 +78,13 @@ function AgendaFunction(props) {
             <Container>
                 <Row>
                     <Col xs={12} md={4} lg={4}>
+                        <h2>What do you want to do?</h2>
                         <div className="agendaForm">
                             <AgendaFormClass editMode={editMode} {...agendaToEdit} agendaIndex={agendaToEditIndex} callAddAgenda={addAgenda} callEditAgenda={editAgenda} />
                         </div>
                     </Col>
-                    <Col>
+                    <Col xs={12} md={8} lg={8}>
+                        <h2>Your Agenda</h2>
                         <div className="agendaList">
                             {
                                 agendas.map((agenda, index) => {

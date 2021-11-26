@@ -19,7 +19,7 @@ class AgendaCardClass extends React.Component {
     render() {
         return (
             <div className="agendaCard">
-                <Card style={{ width: '18rem' }}>
+                <Card>
                     <Card.Body>
                         <Card.Title>{this.props.agendaName}</Card.Title>
                         <Card.Subtitle className="mb-2 text-muted">{this.props.agendaDate} | {this.props.agendaStartTime} - {this.props.agendaEndTime}</Card.Subtitle>
