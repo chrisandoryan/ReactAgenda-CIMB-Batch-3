@@ -1,0 +1,6 @@
+.agendaList {
+    /* background: black; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

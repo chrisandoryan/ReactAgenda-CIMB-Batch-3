@@ -143,8 +143,8 @@ class AgendaFormClass extends React.Component {
         console.log("prevState", prevState)
         if (nextProps.agendaIndex !== prevState.agendaIndex) {
             let agendaDate = nextProps.agendaDate;
-            agendaDate = moment(agendaDate).format("YYYY-MM-DD")
-            
+            if (agendaDate)
+                agendaDate = moment(agendaDate).format("YYYY-MM-DD")
             return {
                 agendaIndex: nextProps.agendaIndex,
                 agendaName: nextProps.agendaName,

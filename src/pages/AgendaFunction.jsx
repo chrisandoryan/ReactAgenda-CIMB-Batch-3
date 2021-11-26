@@ -4,6 +4,8 @@ import AgendaCardClass from "../components/class/AgendaCardClass";
 import AgendaFormClass from "../components/class/AgendaFormClass";
 import Loading from "../components/class/Loading";
 
+import "../assets/css/agenda.css";
+
 function AgendaFunction(props) {
     const [isLoading, setIsLoading] = useState(true)
     const [editMode, setEditMode] = useState(false)
@@ -72,7 +74,7 @@ function AgendaFunction(props) {
         <div>
             {
                 isLoading === true ? (
-                    <Loading />
+                    <Loading darkMode={true} />
                 ) : (
                     null
                 )
@@ -80,11 +82,17 @@ function AgendaFunction(props) {
             <Container>
                 <Row>
                     <Col xs={12} md={4} lg={4}>
+                        <div className="">
+                            <h2>What do you want to do?</h2>
+                        </div>
                         <div className="agendaForm">
                             <AgendaFormClass editMode={editMode} {...agendaToEdit} agendaIndex={agendaToEditIndex} callAddAgenda={addAgenda} callEditAgenda={editAgenda} />
                         </div>
                     </Col>
-                    <Col>
+                    <Col xs={12} md={8} lg={8}>
+                        <div className="">
+                            <h2>Your Agenda</h2>
+                        </div>
                         <div className="agendaList">
                             {
                                 agendas.map((agenda, index) => {
