@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
+import moment from "moment";
 
 class AgendaFormClass extends React.Component {
     constructor(props) {
@@ -7,11 +8,12 @@ class AgendaFormClass extends React.Component {
         // panggil parent function via props
         // props.callTestFunction();
         this.state = {
-            agendaName: "",
-            agendaDate: "",
-            agendaStartTime: "",
-            agendaEndTime: "",
-            agendaDescription: ""
+            agendaIndex: props.agendaIndex || -1,
+            agendaName: props.agendaName || "",
+            agendaDate: props.agendaDate || "",
+            agendaStartTime: props.agendaStartTime || "",
+            agendaEndTime: props.agendaEndTime || "",
+            agendaDescription: props.agendaDescription || ""
         }
         // React v2018/19 (old) perlu binding function untuk bisa dijadiin event handler
         this.handleOnKeyPress = this.handleOnKeyPress.bind(this)
@@ -93,6 +95,14 @@ class AgendaFormClass extends React.Component {
         e.target.start_time.value = "";
         e.target.end_time.value = "";
         e.target.description.value = "";
+        this.setState({
+            agendaIndex: -1,
+            agendaName: "",
+            agendaDate: "",
+            agendaStartTime: "",
+            agendaEndTime: "",
+            agendaDescription: ""
+        })
     }
 
     handleAgendaSubmit = (e) => {
@@ -106,15 +116,44 @@ class AgendaFormClass extends React.Component {
             agendaDescription: this.state.agendaDescription
         }
 
-        this.props.callAddAgenda(agendaObject);
+        let agendaIndex = this.state.agendaIndex;
+
+        if (this.props.editMode) {
+            this.props.callEditAgenda(agendaIndex, agendaObject);
+        }
+        else {
+            this.props.callAddAgenda(agendaObject);
+        }
+        
         this.resetAgendaForm(e);
     }
 
     componentDidMount() {
-        
+        console.log("Mount props", this.props);
+        console.log("Mount state", this.state);
     }
 
     componentDidUpdate() {
+        console.log("Update props", this.props);
+        console.log("Update state", this.state);
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        console.log("nextProps", nextProps)
+        console.log("prevState", prevState)
+        if (nextProps.agendaIndex !== prevState.agendaIndex) {
+            let agendaDate = nextProps.agendaDate;
+            agendaDate = moment(agendaDate).format("YYYY-MM-DD")
+            
+            return {
+                agendaIndex: nextProps.agendaIndex,
+                agendaName: nextProps.agendaName,
+                agendaDate: agendaDate,
+                agendaStartTime: nextProps.agendaStartTime,
+                agendaEndTime: nextProps.agendaEndTime,
+                agendaDescription: nextProps.agendaDescription
+            }
+        }
     }
 
     render() {
@@ -122,7 +161,7 @@ class AgendaFormClass extends React.Component {
             <Form onSubmit={this.handleAgendaSubmit}>
                 <Form.Group className="mb-3" controlId="">
                     <Form.Label>Title</Form.Label>
-                    <Form.Control type="text" placeholder="Enter Agenda Title" onInput={this.handleAgendaNameInput} name="title" />
+                    <Form.Control type="text" placeholder="Enter Agenda Title" onInput={this.handleAgendaNameInput} name="title" value={this.state.agendaName} />
                     <Form.Text className="text-muted">
                         Please be as clear as possible.
                     </Form.Text>
@@ -130,26 +169,32 @@ class AgendaFormClass extends React.Component {
 
                 <Form.Group className="mb-3" controlId="">
                     <Form.Label>Date</Form.Label>
-                    <Form.Control onChange={this.handleAgendaDateChange} type="date" placeholder="Enter Agenda Date" name="date" />
+                    <Form.Control onChange={this.handleAgendaDateChange} type="date" placeholder="Enter Agenda Date" name="date" value={this.state.agendaDate} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="">
                     <Form.Label>Start Time</Form.Label>
-                    <Form.Control onChange={this.handleAgendaStartTimeChange} type="time" placeholder="Enter Agenda Start Time" name="start_time" />
+                    <Form.Control onChange={this.handleAgendaStartTimeChange} type="time" placeholder="Enter Agenda Start Time" name="start_time" value={this.state.agendaStartTime} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="">
                     <Form.Label>End Time</Form.Label>
-                    <Form.Control onChange={this.handleAgendaEndTimeChange} type="time" placeholder="Enter Agenda End Time" name="end_time" />
+                    <Form.Control onChange={this.handleAgendaEndTimeChange} type="time" placeholder="Enter Agenda End Time" name="end_time" value={this.state.agendaEndTime} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="">
                     <Form.Label>Description</Form.Label>
-                    <Form.Control onInput={this.handleAgendaDescriptionInput} as="textarea" rows={3} name="description" />
+                    <Form.Control onInput={this.handleAgendaDescriptionInput} as="textarea" rows={3} name="description" value={this.state.agendaDescription} />
                 </Form.Group>
 
                 <Button variant="primary" type="submit">
-                    Save
+                    {
+                        this.props.editMode ? (
+                            "Save"
+                        ) : (
+                            "Submit"
+                        )
+                    }
                 </Button>   
             </Form>
         )

@@ -8,18 +8,19 @@ function AgendaFunction(props) {
     const [isLoading, setIsLoading] = useState(true)
     const [editMode, setEditMode] = useState(false)
     const [agendaToEdit, setAgendaToEdit] = useState(null)
+    const [agendaToEditIndex, setAgendaToEditIndex] = useState(-1)
     const [agendas, setAgendas] = useState([
         {
             agendaName: "Monthly Meeting",
-            agendaDate: "11 November 2021",
-            agendaStartTime: "11.00",
+            agendaDate: "November 12, 2021",
+            agendaStartTime: "11:00",
             agendaEndTime: "12:00",
             agendaDescription: "Harap hadir tepat waktu karena akan ada si bos."
         },
         {
             agendaName: "Weekly Shopping",
-            agendaDate: "12 November 2021",
-            agendaStartTime: "15.00",
+            agendaDate: "November 21, 2021",
+            agendaStartTime: "15:00",
             agendaEndTime: "14:00",
             agendaDescription: "Beli ayam kalkun."
         }
@@ -39,16 +40,32 @@ function AgendaFunction(props) {
         }
     }
 
+    const editAgenda = (agendaIndex, agendaObject) => {
+        let tempAgendas = [...agendas];
+        tempAgendas[agendaIndex] = agendaObject;
+        setAgendas(tempAgendas);
+        disableEditMode();
+    }
+
     const enableEditMode = (agendaIndex) => {
         let toEdit = {...agendas[agendaIndex]};
         console.log(toEdit);
         setAgendaToEdit(toEdit);
+        setAgendaToEditIndex(agendaIndex);
         setEditMode(true);
     }
 
+    const disableEditMode = () => {
+        setAgendaToEdit({});
+        setAgendaToEdit(-1);
+        setEditMode(false);
+    }
+
+    // eq. componentDidMount
     useEffect(() => {
-        
-        
+        setTimeout(() => { 
+            setIsLoading(false);
+        }, 5000)
     }, [])
 
     return (
@@ -64,7 +81,7 @@ function AgendaFunction(props) {
                 <Row>
                     <Col xs={12} md={4} lg={4}>
                         <div className="agendaForm">
-                            <AgendaFormClass editMode={editMode} {...agendaToEdit} callAddAgenda={addAgenda} />
+                            <AgendaFormClass editMode={editMode} {...agendaToEdit} agendaIndex={agendaToEditIndex} callAddAgenda={addAgenda} callEditAgenda={editAgenda} />
                         </div>
                     </Col>
                     <Col>
