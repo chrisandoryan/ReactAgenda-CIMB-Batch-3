@@ -32,3 +32,12 @@
     transform: rotate(360deg);
   }
 }
+
+.agendaList {
+  display: flex;
+  flex-direction: row;
+}
+
+.agendaCard {
+  margin-right: 10px;
+}
