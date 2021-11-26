@@ -28,8 +28,8 @@ class AgendaCardClass extends React.Component {
                         <Card.Text>
                             {this.props.agendaDescription}
                         </Card.Text>
-                        <Button onClick={this.handleEditClick} variant="primary">Edit</Button>
-                        <Button onClick={this.handleDeleteClick} variant="danger">Delete</Button>
+                        <Button id="btnEdit" onClick={this.handleEditClick} variant="primary">Edit</Button>
+                        <Button id="btnDelete" onClick={this.handleDeleteClick} variant="danger">Delete</Button>
                     </Card.Body>
                 </Card>
             </div>

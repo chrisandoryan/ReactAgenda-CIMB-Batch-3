@@ -39,8 +39,7 @@ function RouteComponent() {
     <Router>
       <AgendaNavbar />
       <Routes>
-        <Route path="/"></Route>
-        <Route path="/demoReact" element={<Greeting />}></Route>
+        <Route path="/" element={<Greeting />}></Route>
         <Route path="/agendaClass" element={<AgendaClass />}></Route>
         <Route path="/agendaFunction" element={<AgendaFunction editMode={false} />}></Route>
       </Routes>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 import moment from "moment";
+import { convertDate } from "../../utils/dateConversion";
 
 class AgendaFormClass extends React.Component {
     constructor(props) {
@@ -142,9 +143,7 @@ class AgendaFormClass extends React.Component {
         console.log("nextProps", nextProps)
         console.log("prevState", prevState)
         if (nextProps.agendaIndex !== prevState.agendaIndex) {
-            let agendaDate = nextProps.agendaDate;
-            if (agendaDate)
-                agendaDate = moment(agendaDate).format("YYYY-MM-DD")
+            let agendaDate = convertDate(nextProps.agendaDate);            
             return {
                 agendaIndex: nextProps.agendaIndex,
                 agendaName: nextProps.agendaName,
@@ -161,7 +160,7 @@ class AgendaFormClass extends React.Component {
             <Form onSubmit={this.handleAgendaSubmit}>
                 <Form.Group className="mb-3" controlId="">
                     <Form.Label>Title</Form.Label>
-                    <Form.Control type="text" placeholder="Enter Agenda Title" onInput={this.handleAgendaNameInput} name="title" value={this.state.agendaName} />
+                    <Form.Control type="text" placeholder="Enter Agenda Title" onInput={this.handleAgendaNameInput} name="title" value={this.state.agendaName} id="inpTitle" />
                     <Form.Text className="text-muted">
                         Please be as clear as possible.
                     </Form.Text>
@@ -169,22 +168,22 @@ class AgendaFormClass extends React.Component {
 
                 <Form.Group className="mb-3" controlId="">
                     <Form.Label>Date</Form.Label>
-                    <Form.Control onChange={this.handleAgendaDateChange} type="date" placeholder="Enter Agenda Date" name="date" value={this.state.agendaDate} />
+                    <Form.Control onChange={this.handleAgendaDateChange} type="date" placeholder="Enter Agenda Date" name="date" value={this.state.agendaDate} id="inpDate" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="">
                     <Form.Label>Start Time</Form.Label>
-                    <Form.Control onChange={this.handleAgendaStartTimeChange} type="time" placeholder="Enter Agenda Start Time" name="start_time" value={this.state.agendaStartTime} />
+                    <Form.Control onChange={this.handleAgendaStartTimeChange} type="time" placeholder="Enter Agenda Start Time" name="start_time" value={this.state.agendaStartTime} id="inpStartTime" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="">
                     <Form.Label>End Time</Form.Label>
-                    <Form.Control onChange={this.handleAgendaEndTimeChange} type="time" placeholder="Enter Agenda End Time" name="end_time" value={this.state.agendaEndTime} />
+                    <Form.Control onChange={this.handleAgendaEndTimeChange} type="time" placeholder="Enter Agenda End Time" name="end_time" value={this.state.agendaEndTime} id="inpEndTime" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="">
                     <Form.Label>Description</Form.Label>
-                    <Form.Control onInput={this.handleAgendaDescriptionInput} as="textarea" rows={3} name="description" value={this.state.agendaDescription} />
+                    <Form.Control onInput={this.handleAgendaDescriptionInput} as="textarea" rows={3} name="description" value={this.state.agendaDescription} id="inpDescription" />
                 </Form.Group>
 
                 <Button variant="primary" type="submit">
